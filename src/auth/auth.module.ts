@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_ACCESS_TOKEN_TTL },
     }),],
-  providers: [AuthResolver, AuthService]
+  providers: [AuthResolver, AuthService, PrismaService]
 })
 export class AuthModule {}

@@ -1,13 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsEmail, IsStrongPassword } from "class-validator";
+import { InputType, PartialType } from "@nestjs/graphql";
+import { SignUpInput } from "src/auth/dto/sign-up.input";
 
 @InputType()
-export class updateCustomerInput {
-    @IsEmail()
-    @Field(() => String)
-    email: string
-
-    @IsStrongPassword()
-    @Field(() => String)
-    password: string
-}
+export class updateCustomerInput extends PartialType(SignUpInput) {}
