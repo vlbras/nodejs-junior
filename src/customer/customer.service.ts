@@ -44,7 +44,7 @@ export class CustomerService {
       throw new UserInputError(`No data provided to update Customer with identifier '${identifier}'`)
     }
     // check if email is unique
-    if (updateCustomerInput.email && updateCustomerInput.email !== email) {
+    if (updateCustomerInput.email) {
       await this.isEmailUnique(updateCustomerInput.email)
     }
     const { password } = await this.prisma.customer.findFirst({
