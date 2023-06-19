@@ -7,7 +7,7 @@ import { updateCustomerInput } from './dto/update-customer.input';
 
 @Injectable()
 export class CustomerService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
   async findAll(params: GetCustomerInput) {
     const { skip, take, cursor, where } = params;
 
@@ -46,6 +46,15 @@ export class CustomerService {
     // check if email is unique
     if (updateCustomerInput.email && updateCustomerInput.email !== email) {
       await this.isEmailUnique(updateCustomerInput.email)
+    }
+    const { password } = await this.prisma.customer.findFirst({
+      where: {
+        email
+      }
+    })
+    // check if password is new
+    if(updateCustomerInput.password === password){
+      throw new UserInputError(`The new password mustn't repeat the old one`)
     }
     return this.prisma.customer.update({
       where: { id },
